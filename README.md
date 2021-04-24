@@ -1,11 +1,12 @@
 # Git-study-experience
 Git-studying
 2021年4月24日Git study（单佳兰）
-----
+
+------
 ### 单人开发
 单人流程:
     一、准备工作(只做一次):
-    1.创建一个工作区
+   	1.创建一个工作区
 	2.在工作区中的打开git终端
 	3.通过git init指令, 初始化版本库
 	4.通过git config user.name "姓名"
