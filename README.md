@@ -42,11 +42,15 @@ Git-studying
     2.在远程的服务器上打开工作区, 在工作区中打开Git终端工具
     3.在Git终端工具中输入 git init --bare
     4.经过以上几步, 就代表远程服务器上的共享版本库已经创建好了
+    
 二、开发人员下载远程版本库
+
     1.开发人员在自己的电脑上打开Git终端工具
     2.从远程的服务器上下载当前项目的共享版本库  git clone 远程服务器共享版本库地址
       和单人开发使用Git的区别: 单人开发是自己创建版本库, 而多人开发是从远程服务器下载版本库
+      
 三、进入开发阶段
+
     和单人开发一样
     1.设置用户名和邮箱
     2.编写代码
@@ -55,12 +59,12 @@ Git-studying
     5.注意点:
     commit是将编写好的代码提交到本地的版本库, 所以其它的开发人员是拿不到我们提交的代码的
     如果想让其它开发人员也能拿到我们提交的代码, 还必须将编写好的代码提交到远程的服务器
-
     多人开发特有
     6.将代码提交到远程的服务器 git push
     7.其它的开发人员只需要通过 git pull 就可以拿到更新的代码了
 
 多人开发使用Git注意点:
+
     1.不能将不能运行的代码提交到本地和远程服务器(切记一定不能)
     2.如果服务器上有其它开发人员的更新内容, 那么我们不能直接通过push将我们的代码提交到服务器
       如果服务器上有其它开发人员更新的内容, 我们必须先将其它开发人员更新的内容更新到本地之后才能通过push提交我们的内容
@@ -72,6 +76,7 @@ Git-studying
 -------
 ### 开发分支
 一、如何查看有多少个分支?
+
     1.通过git branch指令就可以查看当前版本库中有多少个分支
     注意点:
     1.如果当前的版本库是空的, 那么无法查看
@@ -79,6 +84,7 @@ Git-studying
     就代表当前的HEADER指针指向哪一个分支, 我们提交的代码就会提交到指向的分支中
 
 二、如何创建一个分支
+
     1.通过git branch 分支名称 来创建一个新的分支
     注意点:
     在哪个分支中创建了新的分支, 那么创建出来的新的分支就会继承当前分支的所有状态
@@ -89,16 +95,19 @@ Git-studying
     一旦分支被创建出来之后, 分支就是独立的, 分支之间不会相互影响
 
 三、如何切换分支?
+
     1.通过git switch 分支名称 来修改HEADER指针的指向
     注意点: 只要HEADER指针的指向发生了改变, 那么commit的代码就会发生改变
     HEADER指针指向谁commit提交的代码就提交到谁里面
 
 四、如何将分支提交到远程服务器
+
     1.通过git branch -r 来查看远程服务器上有多少个分支
     2.首先需要在本地切换到新建的分支中, 然后通过git push指令提交新建的分支到远程的服务器
     git push --set-upstream origin Dev
 
 五、如何合并分支
+
     可以通过 git merge 分支名称 来合并分支
     例如:
     在master分支中执行  git merge Dev 就代表需要将Dev分支中的代码都合并到master分支中
@@ -106,18 +115,20 @@ Git-studying
     在Dev分支中执行 git merge master 就代表需要将master分支中的代码都合并到Dev分支中
 
 六、如何删除分支
+
     1.可以通过git branch -d 分支名称 来删除本地的分支
     2.可以通过git push origin --delete 分支名称 来删除远程服务器的分支
+    
+  -----
+  -----
   
-  -----
-  -----
   就像写代码需要代码规范一样，代码管理同样需要一个清晰的流程和规范
 https://nvie.com/posts/a-successful-git-branching-model/
 
 一、准备阶段
+
     1.初始化远程工作区和共享版本库
     git init --bare
-
     2.项目经理初始化项目, 并在master定制标记
     添加初始化文件
     git add .
@@ -125,22 +136,19 @@ https://nvie.com/posts/a-successful-git-branching-model/
     git push
     git tag v0.1
     git push origin v0.1
-
     3.项目经理基于master分支创建develop分支
     git switch master
     git branch Develop
     git switch Develop
     git push
-
     4.项目经理给开发人员分配工作任务
 
 二、开发阶段
+
     1.开发人员基于develop分支创建功能分支
     git branch feature/home
     git switch feature/login
-
     2.开发人员在自己的分支上add commit push
-
     3.开发完成告诉项目经理, 由项目经理审核代码并合并代码到develop
     git pull
     git switch feature/home  检查代码
@@ -151,23 +159,20 @@ https://nvie.com/posts/a-successful-git-branching-model/
     git merge feature/login
 
 三、准备上线阶段
+
     1.项目经理基于develop分支创建release分支
     git switch Develop
     git branch Release/v1.0
-
     2.测试人员获取release分支代码进行测试
-
     3.发现bug由开发人员基于release分支创建bugfix分支进行修复
     git pull
     git switch Release/v1.0
     git branch bugfix/issue32
     修复bug / add / commit
-
     4.修复完成后重新合并到release分支
     git switch Release/v1.0
     git merge bugfix/issue32
     git push
-
     5.将测试和修复完所有bug的最终代码合并到master分支和develop分支
     git switch Develop
     git merge Release/v1.0
@@ -175,6 +180,7 @@ https://nvie.com/posts/a-successful-git-branching-model/
     git merge Release/v1.0
 
 四、项目上线
+
     1.项目经理在master分支定制标记
     git switch master
     git tag -a v1.0 -m"项目第一次上线"
@@ -182,22 +188,20 @@ https://nvie.com/posts/a-successful-git-branching-model/
     git push origin v1.0
 
 五、上线之后
+
     1.项目上线后发现紧急bug
     2.基于master分支创建hotfix分支, 在该分支上修复bug
     git switch master
     git branch hotfix/issue66
     修复bug / add / commit
-
     3.修复完成后重新合并到master分支和develop分支
     git switch Develop
     git merge hotfix/issue66
-
     4.项目经理重新在master分支定制标记
     git switch master
     git merge hotfix/issue66
     git tag v1.1
     git push origin v1.1
-
 
 - master主分支:
     + 负责记录上线版本的迭代，该分支代码与线上代码是完全一致的。
